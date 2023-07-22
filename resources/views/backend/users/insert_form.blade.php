@@ -273,57 +273,56 @@
                     </div>
                 </div>
             </div>
+            <h2>Yeni Kullanıcı Ekle</h2>
             <div class="table-responsive small">
-                <table class="table table-striped table-sm">
-                    <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Ad Soyad</th>
-                        <th scope="col">Eposta</th>
-                        <th scope="col">Durum</th>
-                        <th scope="col">İşlemler</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($users) > 0)
-                        @foreach($users as $user)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->is_active }}</td>
-                                <td>
-                                    <ul class="nav float-start">
-                                        <li class="nav-item">
-                                            <a href="{{ url("/users/$user->user_id/edit") }}" class="nav-link text-black">
-                                                <span data-feather="edit"></span>
-                                                Güncelle
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{ url("/users/$user->user_id") }}" class="nav-link list-item-delete text-black">
-                                                <span data-feather="trash-2"></span>
-                                                Sil
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="/users" class="nav-link text-black">
-                                                <span data-feather="lock"></span>
-                                                Şifre Değiştir
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td class="text-center" colspan="5">Herhan gibi Kullanıcı bulunamadı.</td>
-                        </tr>
-                    @endif
-
-                    </tbody>
-                </table>
+                <form action="{{ url('/users') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="name" class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Ad Soyad giriniz">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="email" class="form-label">Eposta</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Eposta giriniz">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-6">
+                            <label for="password" class="form-label">Şifre</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Şifre giriniz">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="password2" class="form-label">Şifre Tekrarı</label>
+                            <input type="password" class="form-control" id="password2" name="password2" placeholder="Şifrenizi tekrar giriniz">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-check mt-4">
+                                <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin">
+                                <label for="is_admin" class="form-check-label">
+                                    Yetkili Kullanıcı
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-check mt-4">
+                                <input type="checkbox" class="form-check-input" id="is_active" name="is_active">
+                                <label for="is_active" class="form-check-label">
+                                    Aktif Kullanıcı
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-success mt-2" type="submit">
+                                KAYDET
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </main>
     </div>
