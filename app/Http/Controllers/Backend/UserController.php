@@ -43,9 +43,6 @@ class UserController extends Controller
         $is_admin = $request->get('is_admin', 0);
         $is_active = $request->get('is_active', 0);
 
-        $is_admin = $is_admin == "on" ? 1 : 0;
-        $is_active = $is_active == "on" ? 1 : 0;
-
         $user = new User();
         $user->name = $name;
         $user->email = $email;
@@ -77,19 +74,33 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('backend.users.update_form', ["user" => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $is_admin = $request->get('is_admin', 0);
+        $is_active = $request->get('is_active', 0);
+
+        $user = User::find($id);
+        $user->name = $name;
+        $user->email = $email;
+        $user->is_admin = $is_admin;
+        $user->is_active = $is_active;
+
+        $user->save();
+
+        return redirect('/users');
     }
 
     /**
