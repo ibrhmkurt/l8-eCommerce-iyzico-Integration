@@ -287,7 +287,7 @@
                     <tbody>
                     @if(count($users) > 0)
                         @foreach($users as $user)
-                            <tr>
+                            <tr id="{{ $user->user_id }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
@@ -307,10 +307,23 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{ url("/users/$user->user_id") }}" class="nav-link list-item-delete text-black">
-                                                <span data-feather="trash-2"></span>
-                                                Sil
-                                            </a>
+
+                                            <form action="{{url("/users/$user->user_id")}}" method="POST">
+
+                                                @csrf
+
+                                                @method("DELETE")
+
+                                                <button class="btn" type="submit">
+
+                                                    <span data-feather="trash-2"></span>
+
+                                                    Sil
+
+                                                </button>
+
+                                            </form>
+
                                         </li>
                                         <li class="nav-item">
                                             <a href="/users" class="nav-link text-black">
@@ -324,7 +337,7 @@
                         @endforeach
                     @else
                         <tr>
-                            <td class="text-center" colspan="5">Herhan gibi Kullanıcı bulunamadı.</td>
+                            <td class="text-center" colspan="5">Herhangi bir Kullanıcı bulunamadı.</td>
                         </tr>
                     @endif
 
