@@ -308,7 +308,13 @@
                                         </li>
                                         <li class="nav-item">
 
-                                            <form action="{{url("/users/$user->user_id")}}" method="POST">
+                                            <a href="{{url("/users/$user->user_id")}}" class="nav-link list-item-delete text-black">
+                                                <span data-feather="trash-2"></span>
+                                                Sil
+                                            </a>
+
+                                            <!-- js kullanmadan silme-->
+                                            <!--<form action="#" method="POST">
 
                                                 @csrf
 
@@ -322,7 +328,7 @@
 
                                                 </button>
 
-                                            </form>
+                                            </form>-->
 
                                         </li>
                                         <li class="nav-item">
@@ -348,7 +354,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{{ asset('js/app,js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
 <script>
     feather.replace()
