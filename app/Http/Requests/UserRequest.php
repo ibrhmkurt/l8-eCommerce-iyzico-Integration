@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
         //unique validasyonunda update formda kurtulmak için id gönderilir ve blade de hidden input olarak eklenir.
         $user_id = $this->request->get('user_id');
         return [
-            "name" => "required|min:3",
-            "email" => "required|email|unique:App\Models\User,email,$user_id",
+            "name" => "required|sometimes|min:3",
+            "email" => "required||sometimes|email|unique:App\Models\User,email,$user_id",
             "password" => "required|sometimes|string|min:5|confirmed"
         ];
     }

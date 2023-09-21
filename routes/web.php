@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 
 Route::resource('/users', \App\Http\Controllers\Backend\UserController::class);
+Route::get('/users/{user}/change-password', [\App\Http\Controllers\Backend\UserController::class, 'passwordForm'])->name('password.form');
+Route::post('/users/{user}/change-password', [\App\Http\Controllers\Backend\UserController::class, 'changePassword'])->name('change.password');
