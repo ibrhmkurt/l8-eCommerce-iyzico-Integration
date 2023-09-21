@@ -47,19 +47,10 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $name = $request->get('name');
-        $email = $request->get('email');
-        $password = $request->get('password');
-        $is_admin = $request->get('is_admin', 0);
-        $is_active = $request->get('is_active', 0);
-
         $user = new User();
-        $user->name = $name;
-        $user->email = $email;
-        $user->password = Hash::make($password);
-        $user->is_admin = $is_admin;
-        $user->is_active = $is_active;
 
+        $data = $this->prepare($request, $user->getFillable());
+        $user->fill($data);
         $user->save();
 
         return redirect($this->returnUrl);
@@ -86,15 +77,8 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $name = $request->get('name');
-        $email = $request->get('email');
-        $is_admin = $request->get('is_admin', 0);
-        $is_active = $request->get('is_active', 0);
-
-        $user->name = $name;
-        $user->email = $email;
-        $user->is_admin = $is_admin;
-        $user->is_active = $is_active;
+        $data = $this->prepare($request, $user->getFillable());
+        $user->fill($data);
 
         $user->save();
 
@@ -121,8 +105,9 @@ class UserController extends Controller
 
     public function changePassword( User $user, UserRequest $request)
     {
-        $password = $request->get('password');
-        $user->password = Hash::make($password);
+        $data = $this->prepare($request, $user->getFillable());
+        $user->fill($data);
+
         $user->save();
 
         return redirect($this->returnUrl);

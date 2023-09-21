@@ -12,18 +12,4 @@
             Kullanıcılar
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link {{Str::of(url()->current())->contains("/categories") ? "active" : ""}}"
-           href="/categories">
-            <span data-feather="grid"></span>
-            Kategoriler
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{Str::of(url()->current())->contains("/products") ? "active" : ""}}"
-           href="/products">
-            <span data-feather="grid"></span>
-            Ürünler
-        </a>
-    </li>
 </ul>
