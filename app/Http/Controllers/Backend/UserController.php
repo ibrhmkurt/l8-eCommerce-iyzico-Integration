@@ -13,6 +13,11 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->returnUrl = "/users";
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -57,19 +62,9 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/users');
+        return redirect($this->returnUrl);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return string
-     */
-    public function show($id)
-    {
-        return "show => $id";
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -77,9 +72,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
         return view('backend.users.update_form', ["user" => $user]);
     }
 
@@ -90,14 +84,13 @@ class UserController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
-    public function update(UserRequest $request, $id): RedirectResponse
+    public function update(UserRequest $request, User $user): RedirectResponse
     {
         $name = $request->get('name');
         $email = $request->get('email');
         $is_admin = $request->get('is_admin', 0);
         $is_active = $request->get('is_active', 0);
 
-        $user = User::find($id);
         $user->name = $name;
         $user->email = $email;
         $user->is_admin = $is_admin;
@@ -105,7 +98,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect('/users');
+        return redirect($this->returnUrl);
     }
 
     /**
@@ -114,11 +107,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
         $user->delete();
-        //return redirect('/users');
+        //return redirect($this->returnUrl);
         return response()->json(["message" => "Done", "id" => $user->user_id]);
     }
 
@@ -133,7 +125,7 @@ class UserController extends Controller
         $user->password = Hash::make($password);
         $user->save();
 
-        return redirect('/users');
+        return redirect($this->returnUrl);
     }
 
 }
